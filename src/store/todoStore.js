@@ -9,5 +9,10 @@ export const TodoStore = create((set, get) => ({
                 item.Id === id ? { ...item, completed: !item.completed } : item
             )
         }));
+    },
+    setIsFilter: (newStatus) => {
+        set(() => ({
+            isFilter: newStatus
+        }));
     }
 }));

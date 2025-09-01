@@ -13,7 +13,7 @@ function TodoItem({ title, completed,onToggle}) {
 }
 
 export default function TodoList() {
-  const { todos, setItemById,isFilter,setIsFilter } = TodoStore();
+  const { todos, setItemById,isFilter,setIsFilter,createItem } = TodoStore();
   // const [todos,setTodos] = useState(todoItems);
   // const  [isFilter, setIsFilter] = useState(false)
 	const filteredList = isFilter?todos.filter(item => !item.completed):todos;
@@ -21,9 +21,12 @@ export default function TodoList() {
     setItemById(id);
   } 
   const addItem = () => {
-    const newtitle = document.getElementById("new").value;
+    const newtitle = document.getElementById("new").value.trim();
     document.getElementById("new").value = "";
-    console.log(newtitle);
+    //console.log(newtitle);
+    if(newtitle==="") alert("输入内容不能为空!");
+    createItem(newtitle);
+
   } 
   return (
     <section>

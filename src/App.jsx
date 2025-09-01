@@ -1,8 +1,5 @@
 import { useState } from 'react'
-import './App.css'
-import Hello from './Hello.jsx'
-import Counter from './counter/Counter.jsx';
-import Register from './login/Register.jsx';
+import './styles/App.css'
 
 function App() {
   const [count, setCount] = useState(0)

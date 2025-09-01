@@ -20,12 +20,22 @@ export default function TodoList() {
   const handleItemToggle = (id) => {
     setItemById(id);
   } 
+  const addItem = () => {
+    const newtitle = document.getElementById("new").value;
+    document.getElementById("new").value = "";
+    console.log(newtitle);
+  } 
   return (
     <section>
       <h1>Sally Ride 的 Todo 清单</h1>
       <label>
         <input type="checkbox" checked={isFilter} onChange={() => setIsFilter(!isFilter)} />
         过滤已完成的任务
+      </label>
+      <br></br>
+      <label>
+        <input id="new" type="text" placeholder="新增Todo"/>
+        <button onClick={addItem}>添加</button>
       </label>
       <ul>
         {filteredList.map(item => (

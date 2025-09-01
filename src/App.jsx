@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './styles/App.css'
+import TodoList from './TodoList'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -7,7 +8,7 @@ function App() {
   return (
     <>
       <div>
-              <Register />
+              <TodoList />
       </div>
       <h1>Vite + React</h1>
       <div className="card">

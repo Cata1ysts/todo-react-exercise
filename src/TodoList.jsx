@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import todoItems from './todoItems.json';
 import styles from './TodoList.module.css';
+import { TodoStore } from './store/todoStore';
 function TodoItem({ title, completed,onToggle}) {
   const itemClassName = `${styles.item} ${completed ? styles.checked : ''}`;
   return <li className={itemClassName}>
@@ -12,8 +13,9 @@ function TodoItem({ title, completed,onToggle}) {
 }
 
 export default function TodoList() {
-  const [todos,setTodos] = useState(todoItems);
-  const  [isFilter, setIsFilter] = useState(false)
+  const { todos, isFilter } = TodoStore();
+  // const [todos,setTodos] = useState(todoItems);
+  // const  [isFilter, setIsFilter] = useState(false)
 	const filteredList = isFilter?todos.filter(item => !item.completed):todos;
   const handleItemToggle = (id,newStatus) => {
     setTodos(todos.map(item => item.Id === id ? {...item, completed: newStatus} : item));

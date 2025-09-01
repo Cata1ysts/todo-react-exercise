@@ -13,12 +13,12 @@ function TodoItem({ title, completed,onToggle}) {
 }
 
 export default function TodoList() {
-  const { todos, isFilter } = TodoStore();
+  const { todos, setItemById,isFilter } = TodoStore();
   // const [todos,setTodos] = useState(todoItems);
   // const  [isFilter, setIsFilter] = useState(false)
 	const filteredList = isFilter?todos.filter(item => !item.completed):todos;
-  const handleItemToggle = (id,newStatus) => {
-    setTodos(todos.map(item => item.Id === id ? {...item, completed: newStatus} : item));
+  const handleItemToggle = (id) => {
+    setItemById(id);
   } 
   return (
     <section>

@@ -18,7 +18,7 @@ function TodoItem({ title, completed, onToggle }) {
 export default function TodoList() {
   const {
     todos,
-    setItemById,
+    changeItemStatus,
     isFilter,
     setIsFilter,
     createItem,
@@ -33,7 +33,7 @@ export default function TodoList() {
     : todos;
   //切换事项完成状态
   const handleItemToggle = (id) => {
-    setItemById(id);
+    changeItemStatus(id);
   };
 
   //添加事项
@@ -104,9 +104,8 @@ export default function TodoList() {
       <ul>
         {filteredList.map((item) => (
           <TodoItem
-            key={item.Id}
             {...item}
-            onToggle={() => handleItemToggle(item.Id, !item.completed)}
+            onToggle={() => handleItemToggle(item.id)}
           />
         ))}
       </ul>

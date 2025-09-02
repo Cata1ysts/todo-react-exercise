@@ -25,12 +25,18 @@ export const TodoStore = create((set, get) => ({
   },
 
   //添加新事项
-  createItem: (title) => {
-    get().increaseIndex();
-    const newItem = { Id: get().INDEX, title: title, completed: false };
-    set((state) => ({
-      todos: [newItem, ...state.todos],
-    }));
+  createItem:async (title) => {
+        try {
+            const response = await api.post('/todos', {
+                title: title,
+                completed: false,
+            });
+            //console(response.data);
+            setTodos([response.data,...todos]);
+        } catch (error) {
+          
+            console.error('添加待办事项失败:', error);
+        }
   },
 
   //删除已完成的事项

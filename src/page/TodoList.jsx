@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from 'react-router';
 import todoItems from "../todoItems.json";
 import styles from "../todoList.module.css";
 import { TodoStore } from "../store/todoStore";
@@ -26,6 +27,7 @@ export default function TodoList() {
   } = TodoStore();
   // const [todos,setTodos] = useState(todoItems);
   // const  [isFilter, setIsFilter] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
   const filteredList = isFilter
     ? todos.filter((item) => !item.completed)
     : todos;
@@ -64,6 +66,9 @@ export default function TodoList() {
         setPageNumber(e.target.value);
     };
   const handleClickPageSearch = () => {
+    searchParams.set('page', pageNumber);
+    searchParams.set('size', itemsPerPage);
+    setSearchParams(searchParams);
     getItemsByPage(pageNumber, itemsPerPage);
   };
 

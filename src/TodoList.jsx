@@ -20,14 +20,17 @@ export default function TodoList() {
   const handleItemToggle = (id) => {
     setItemById(id);
   } 
-  const addItem = () => {
-    const newtitle = document.getElementById("new").value.trim();
-    document.getElementById("new").value = "";
-    //console.log(newtitle);
-    if(newtitle==="") alert("输入内容不能为空!");
-    createItem(newtitle);
+  const [inputValue, setInputValue] = useState('');
 
-  } 
+    const handleChange = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleClick = () => {
+       const newItem = { Id: todos.length + 1, title: inputValue, completed: false};
+       createItem(inputValue);
+       setInputValue('');
+    };
   return (
     <section>
       <h1>Sally Ride 的 Todo 清单</h1>
@@ -37,8 +40,15 @@ export default function TodoList() {
       </label>
       <br></br>
       <label>
-        <input id="new" type="text" placeholder="新增Todo"/>
-        <button onClick={addItem}>添加</button>
+        <input
+                type="text"
+                value={inputValue}
+                onChange={handleChange}
+                placeholder="输入一些文本"
+            />
+            <button onClick={handleClick}>
+                提交
+            </button>
       </label>
       <ul>
         {filteredList.map(item => (

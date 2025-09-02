@@ -25,7 +25,7 @@ export const TodoStore = create((set, get) => ({
         get().increaseIndex();
         const newItem = { Id: get().INDEX, title: title, completed: false};
         set((state) => ({
-            todos:[...state.todos,newItem]
+            todos:[newItem,...state.todos,]
         }))
     }
 }));

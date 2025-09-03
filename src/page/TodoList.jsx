@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSearchParams } from 'react-router';
-import todoItems from "../todoItems.json";
 import styles from "../todoList.module.css";
 import { TodoStore } from "../store/todoStore";
 import { useEffect } from "react";
@@ -25,7 +24,6 @@ export default function TodoList() {
     createItem,
     deleteCompletedItems,
     getItemsByPage,
-    getItems,
   } = TodoStore();
   // const [todos,setTodos] = useState(todoItems);
   // const  [isFilter, setIsFilter] = useState(false)

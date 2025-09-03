@@ -55,7 +55,7 @@ export const TodoStore = create((set, get) => ({
 //获取事项
   getItems: async () => {
     try {
-      await api.get("/todos");
+      const response =await api.get("/todos");
       set({ todos: response.data })
       console.log(get().Todos);
     } catch (error) {

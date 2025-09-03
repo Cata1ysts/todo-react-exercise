@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import api from "./api";
-export const useTodoLists = create((set, get) => ({
+export const useTodoLists = create((set) => ({
     todos: [],
     loading: false,
     error: null,

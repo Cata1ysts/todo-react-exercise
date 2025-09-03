@@ -29,10 +29,10 @@ jobs:
 
       - name: Package build files
         run: 
-          zip -r disk.zip disk
+          zip -r dist.zip dist
 
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: code-archive
-          path: disk.zip
+          path: dist.zip

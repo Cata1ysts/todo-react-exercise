@@ -3,7 +3,7 @@ name: TodlList CI Practice
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:

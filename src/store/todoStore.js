@@ -2,7 +2,7 @@ import { create } from "zustand";
 import todoItems from "../todoItems.json";
 import api from "../service/todoListAPI.jsx";
 export const TodoStore = create((set, get) => ({
-  todos: todoItems,
+  todos: [],
   isFilter: false,
   INDEX: todoItems.length,
   //切换事项完成状态
@@ -13,6 +13,7 @@ export const TodoStore = create((set, get) => ({
       console.log(id);
       const response = await api.put(`/todos/${id}`, {
         id: id,
+        title: item.title,
         completed: !item.completed,
       });
       set((state) => ({
@@ -51,12 +52,44 @@ export const TodoStore = create((set, get) => ({
     }
   },
 
+//获取事项
+  getItems: async () => {
+    try {
+      const response = await api.get("/todos");
+      set({ todos: response.data })
+      console.log(get().Todos);
+    } catch (error) {
+      console.error("获取事项失败:", error);
+    }
+  },
+
+    //根据id删除事项
+  deleteItem: async (id) => {
+    try {
+      await api.delete(`/todos/${id}`);
+      //console(response.data);
+    } catch (error) {
+      console.error("添加待办事项失败:", error);
+    }
+  },
+
   //删除已完成的事项
-  deleteCompletedItems: () => {
+  deleteCompletedItems: async () => {
+    const needToDelete =get().todos.filter(item => item.completed);
+    needToDelete.forEach(item => get().deleteItem(item.id));
     set((state) => ({
       todos: state.todos.filter((item) => !item.completed),
     }));
   },
   //分页获取数据
-  getItemsByPage: (page, size) => {},
+  getItemsByPage: async (page, size) => {
+    try {
+      const response = await api.get("/todos?page=" + page + "&size=" + size);
+      //console(response.data);
+      set({ todos: response.data });
+      console.log(get().todos);
+    } catch (error) {
+      console.error("分页获取事项失败:", error);
+    }
+  },
 }));

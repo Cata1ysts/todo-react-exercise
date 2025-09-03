@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router';
 import todoItems from "../todoItems.json";
 import styles from "../todoList.module.css";
 import { TodoStore } from "../store/todoStore";
+import { useEffect } from "react";
 function TodoItem({ title, completed, onToggle }) {
   const itemClassName = `${styles.item} ${completed ? styles.checked : ""}`;
   return (
@@ -23,7 +24,8 @@ export default function TodoList() {
     setIsFilter,
     createItem,
     deleteCompletedItems,
-    getItemsByPage
+    getItemsByPage,
+    getItems,
   } = TodoStore();
   // const [todos,setTodos] = useState(todoItems);
   // const  [isFilter, setIsFilter] = useState(false)
@@ -45,19 +47,14 @@ export default function TodoList() {
 
   const handleClickAddItem = () => {
     if (inputValue.trim() === "") return;
-    const newItem = {
-      Id: todos.length + 1,
-      title: inputValue,
-      completed: false,
-    };
     createItem(inputValue);
     setInputValue("");
   };
 
 
   //分页获取数据
-  const [itemsPerPage, setItemsPerPage] = useState(5); // 每页条数
-  const [pageNumber, setPageNumber] = useState(1); // 当前页码
+  const [itemsPerPage, setItemsPerPage] = useState(searchParams.get("size")?searchParams.get("size"):10); // 每页条数
+  const [pageNumber, setPageNumber] = useState(searchParams.get("page")?searchParams.get("page"):1); // 当前页码
   const handleItemsPerPageChange = (e) => {
         setItemsPerPage(e.target.value);
     };
@@ -72,6 +69,10 @@ export default function TodoList() {
     getItemsByPage(pageNumber, itemsPerPage);
   };
 
+    useEffect(() => {
+      getItemsByPage(pageNumber, itemsPerPage);
+    }, [deleteCompletedItems,createItem]); 
+    // 添加 fetchTodos 作为依赖项
   return (
     <section>
       <h1>Sally Ride 的 Todo 清单</h1>
@@ -118,9 +119,19 @@ export default function TodoList() {
       </select>
 
       <label>页码:</label>
-      <input type="number" id="pageNumber" min="1" placeholder="输入页码" onChange={handlePageNumberChange}/>
+      <input type="number" id="pageNumber" min={1} placeholder={pageNumber} onChange={handlePageNumberChange}/>
 
       <button id="pageSearch" onClick={handleClickPageSearch}>跳转</button>
+      {/* 显示当前页码
+      <div>
+        <p>当前页: {pageNumber}</p>
+        <button onClick={setPageNumber(pageNumber-1)} disabled={pageNumber === 1}>
+          上一页
+        </button>
+        <button onClick={setPageNumber(pageNumber+1)}>
+          下一页
+        </button>
+      </div> */}
     </section>
   );
 }
